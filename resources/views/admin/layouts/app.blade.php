@@ -90,6 +90,13 @@
                             <p>Employees</p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('categories.index') }}" class="nav-link @if(isset($menu) && $menu=='Categories') active @endif">
+                            <i class="far fa-list-alt nav-icon"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

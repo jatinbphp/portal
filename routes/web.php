@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,4 +46,7 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Users*/
     Route::resource('users', UserController::class);
+
+    /*Categories*/
+    Route::resource('categories', CategoryController::class);
 });

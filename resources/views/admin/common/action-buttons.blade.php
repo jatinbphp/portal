@@ -26,7 +26,7 @@
         @endif
     @endif
 
-    @if(!in_array(Auth::user()->role, ['controllers']))
+    @if(!in_array(Auth::user()->role, ['controllers']) && $show === True)
         <a href="javascript:void(0)" title="View" data-id="{{$id}}" class="btn btn-sm btn-warning tip  view-info" data-url="{{ route($section_name.'.show', [strtolower(str_replace(' ', '_', $section_title)) => $id]) }}">
             <i class="fa fa-eye"></i>
         </a>

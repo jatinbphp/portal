@@ -22,8 +22,31 @@ $(function () {
         "order": [[0, "DESC"]]
     });
 
+    //Category Table
+    var categories_table = $('#categoryTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500 ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },
+            {data: 'name', name: 'name'},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+            {data: 'created_at', "width": "15%", name: 'created_at'},
+            {data: 'action', "width": "12%",  name: 'action', orderable: false},
+        ],
+        "order": [[1, "ASC"]]
+    });
+
     var sectionTableMap = {
         'users_table': users_table,
+        'categories_table': categories_table
     };
 
     //Delete Record
@@ -153,5 +176,4 @@ $(function () {
             }
         });
     });
-
 });
