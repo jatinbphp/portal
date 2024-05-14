@@ -1,0 +1,36 @@
+.imagePreview{width:100%;height:140px;background-position:center center;background:url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);background-color:#fff;background-size:cover;background-repeat:no-repeat;display:inline-block;box-shadow:0 -3px 6px 2px rgba(0,0,0,0.2)}
+.imagePreviewPlus{width:100%;height:180px;background-position:center center;background-color:#fff;background-size:cover;background-repeat:no-repeat;display:inline-block;box-shadow:0 -3px 6px 2px rgba(0,0,0,0.2);display:flex;align-content:center;justify-content:center;align-items:center}
+.additionalImageClass .btn-primary{display:block;border-radius:0;box-shadow:0 4px 6px 2px rgba(0,0,0,0.2);margin-top:-5px}
+.imgUp{margin-bottom:15px}
+.del{position:absolute;top:0;right:15px;width:30px;height:30px;text-align:center;line-height:30px;background-color:rgba(255,255,255,0.6);cursor:pointer}
+.additionalImageClass input[type=file]{display:contents}
+.removeImage{position:absolute;top:0;right:0;margin-right:15px}
+.additionalImageClass .col-md-3{margin-bottom:20px}
+.ladda-button{height:28px; padding:0 5px}
+#content3 .col-md-8 {border-left: 1px solid #ccc;}
+.sweet-alert h2{font-size: 22px;}
+.file-group {padding: 3px 0px 0px 5px;}
+
+.file-icon{font-size:48px;margin-bottom:10px}
+.file-name{font-size:16px;margin-bottom:10px}
+
+.file-upload-box{border:2px dashed #ccc;padding:5px;text-align:center;cursor:pointer;}
+.file-upload-box h2{font-size:20px;margin-bottom:10px}
+.file-input{display:none}
+.upload-label{cursor:pointer}
+.checkbox-list{display:flex;flex-wrap:wrap}
+.checkbox-label{margin-right:20px;display:flex;align-items:center;position:relative}
+.checkbox-label input{display:none}
+.checkmark{display:inline-block;width:20px;height:20px;border:2px solid #555;border-radius:4px;margin-right:5px;position:relative;cursor:pointer}
+.checkmark:after{content:"";position:absolute;display:none}
+.checkbox-label input:checked ~ .checkmark:after{display:block}
+.checkbox-label input:checked ~ .checkmark{background-color:#2196F3;border-color:#2196F3}
+.checkmark:after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.checkbox-label span{font-weight:400}
+.checkmark:hover{background-color:#ccc}
+#commonModal{padding: 0 !important;}
+#view-documents-list{z-index: 10000}
+.control-label{margin-bottom: 0px;}
+.modal-th{width: 25%;}
+.callout{padding: 10px !important;}
+.text-danger strong{font-size: 14px;font-weight: 500;}
