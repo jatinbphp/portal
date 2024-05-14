@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\ImageController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +42,6 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
     /*Common*/
     Route::post('common/changestatus', [CommonController::class,'changeStatus'])->name('common.changestatus');
 
-    /*Users*/
-    Route::resource('users', UserController::class);
+    /*Employees*/
+    Route::resource('employees', EmployeeController::class);
 });

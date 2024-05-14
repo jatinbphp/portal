@@ -5,10 +5,9 @@
     @include('admin.common.header', [
         'menu' => $menu,
         'breadcrumb' => [
-            ['route' => route('admin.dashboard'), 'title' => 'Dashboard'],
-            ['route' => route('users.index'), 'title' => $menu]
+            ['route' => route('admin.dashboard'), 'title' => 'Dashboard']
         ],
-        'active' => 'Add'
+        'active' => 'Edit Profile'
     ])
 
     <section class="content">
@@ -17,14 +16,14 @@
             <div class="col-md-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        @include('admin.common.card-header', ['title' => 'Add ' . $menu])
+                        @include('admin.common.card-header', ['title' => 'Edit Profile'])
                     </div>
-                    {!! Form::open(['url' => route('users.store'), 'id' => 'usersForm', 'class' => 'form-horizontal','files'=>true]) !!}
+                    {!! Form::model($user,['url' => url('admin/profile_update/'.$user->id),'method'=>'patch','id'=>'profileForm','class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
-                            @include ('admin.user.form')
+                            @include ('admin.employee.profile_form')
                         </div>
                         <div class="card-footer">
-                            @include('admin.common.footer-buttons', ['route' => 'users.index', 'type' => 'create'])
+                            @include('admin.common.footer-buttons', ['route' => 'admin.dashboard', 'type' => 'update'])
                         </div>
                     {!! Form::close() !!}
                 </div>

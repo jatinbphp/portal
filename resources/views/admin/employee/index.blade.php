@@ -17,11 +17,11 @@
             <div class="col-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        @include('admin.common.card-header', ['title' => 'Manage ' . $menu, 'addNewRoute' => route('users.create')])
+                        @include('admin.common.card-header', ['title' => 'Manage ' . $menu, 'addNewRoute' => route('employees.create')])
                     </div>
                     <div class="card-body table-responsive">
-                        <input type="hidden" id="route_name" value="{{ route('users.index') }}">
-                        <table id="usersTable" class="table table-bordered table-striped datatable-dynamic">
+                        <input type="hidden" id="route_name" value="{{ route('employees.index') }}">
+                        <table id="employeesTable" class="table table-bordered table-striped datatable-dynamic">
                             <thead>
                                 <tr>
                                     <th>#</th>

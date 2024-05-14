@@ -85,7 +85,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('users.index') }}" class="nav-link @if(isset($menu) && $menu=='Employees') active @endif">
+                        <a href="{{ route('employees.index') }}" class="nav-link @if(isset($menu) && $menu=='Employees') active @endif">
                             <i class="far fa-user-circle nav-icon"></i>
                             <p>Employees</p>
                         </a>
