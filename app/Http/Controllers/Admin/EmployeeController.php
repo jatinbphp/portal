@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use DataTables;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\EmployeeRequest;
 
-class UserController extends Controller
+class EmployeeController extends Controller
 {
     public function __construct(Request $request){
         $this->middleware('auth');
@@ -33,28 +33,28 @@ class UserController extends Controller
                     return view('admin.common.status-buttons', $row);
                 })
                 ->addColumn('action', function($row){
-                    $row['section_name'] = 'users';
-                    $row['section_title'] = 'User';
+                    $row['section_name'] = 'employees';
+                    $row['section_title'] = 'Employees';
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
         }
 
-        return view('admin.user.index', $data);
+        return view('admin.employee.index', $data);
     }
 
     public function create(){
         $data['menu'] = 'Employees';
-        return view("admin.user.create",$data);
+        return view("admin.employee.create",$data);
     }
 
-    public function store(UserRequest $request){        
+    public function store(EmployeeRequest $request){        
         $input = $request->all();
         $user = User::create($input);
 
         // Flash success message and redirect
         \Session::flash('success', 'Employee has been inserted successfully!');
-        return redirect()->route('users.index');
+        return redirect()->route('employees.index');
     }
 
     public function show($id) {
@@ -71,10 +71,10 @@ class UserController extends Controller
     public function edit($id){
         $data['menu'] = 'Employees';
         $data['user'] = User::findOrFail($id);
-        return view('admin.user.edit',$data);
+        return view('admin.employee.edit',$data);
     }
 
-    public function update(UserRequest $request, $id){
+    public function update(EmployeeRequest $request, $id){
         // Retrieve the user by ID
         $user = User::findOrFail($id);
 
@@ -91,7 +91,7 @@ class UserController extends Controller
 
         // Flash success message and redirect
         \Session::flash('success', 'Employee has been updated successfully!');
-        return redirect()->route('users.index');
+        return redirect()->route('employees.index');
     }
 
     public function destroy($id){

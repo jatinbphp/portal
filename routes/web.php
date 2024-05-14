@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
-
+use App\Http\Controllers\Admin\EmployeeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,4 +49,7 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Categories*/
     Route::resource('categories', CategoryController::class);
+
+    /*Employees*/
+    Route::resource('employees', EmployeeController::class);
 });

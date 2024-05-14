@@ -39,7 +39,7 @@ class ProfileUpdateController extends Controller
             }
         }
         $data['user'] = $user;
-        return view('admin.user.profile_edit',$data);
+        return view('admin.employee.profile_edit',$data);
     }
 
     public function update(ProfileUpdateRequest $request, $id){        

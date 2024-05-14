@@ -1,6 +1,6 @@
 $(function () {
-    //User Table
-    var users_table = $('#usersTable').DataTable({
+    //Employees Table
+    var employees_table = $('#employeesTable').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 100,
@@ -45,8 +45,8 @@ $(function () {
     });
 
     var sectionTableMap = {
-        'users_table': users_table,
-        'categories_table': categories_table
+        'categories_table': categories_table,
+        'employees_table': employees_table,
     };
 
     //Delete Record

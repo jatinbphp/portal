@@ -1,13 +1,13 @@
 @extends('admin.layouts.app')
 @section('content')
 <div class="content-wrapper">
-
+    
     @include('admin.common.header', [
         'menu' => $menu,
         'breadcrumb' => [
             ['route' => route('admin.dashboard'), 'title' => 'Dashboard']
         ],
-        'active' => 'Edit Profile'
+        'active' => $menu
     ])
 
     <section class="content">
@@ -16,14 +16,14 @@
             <div class="col-md-12">
                 <div class="card card-info card-outline">
                     <div class="card-header">
-                        @include('admin.common.card-header', ['title' => 'Edit Profile'])
+                        @include('admin.common.card-header', ['title' => 'Edit ' . $menu])
                     </div>
-                    {!! Form::model($user,['url' => url('admin/profile_update/'.$user->id),'method'=>'patch','id'=>'profileForm','class' => 'form-horizontal','files'=>true]) !!}
+                    {!! Form::model($user,['url' => route('employees.update',['employee'=>$user->id]),'method'=>'patch','id' => 'usersForm','class' => 'form-horizontal','files'=>true]) !!}
                         <div class="card-body">
-                            @include ('admin.user.profile_form')
+                            @include ('admin.employee.form')
                         </div>
                         <div class="card-footer">
-                            @include('admin.common.footer-buttons', ['route' => 'admin.dashboard', 'type' => 'update'])
+                            @include('admin.common.footer-buttons', ['route' => 'employees.index', 'type' => 'update'])
                         </div>
                     {!! Form::close() !!}
                 </div>
