@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('role')->default('employees');
             $table->string('status')->default('active');
-            $table->integer('added_by')->default(0);
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

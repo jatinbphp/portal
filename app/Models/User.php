@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $appends = ['full_name'];
    
-    protected $fillable = ['added_by', 'name', 'email', 'password', 'role', 'image', 'phone', 'status', 'practice_ids','company_ids','branch_ids'];
+    protected $fillable = ['company_ids', 'branch_name', 'name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -39,28 +39,14 @@ class User extends Authenticatable
 
     /* user roles */
     const SUPER_ADMIN = "super_admin";
-    const COMPANIES = "companies";
-    const CONTROLLERS = "controllers";
-    const ACCOUNTANTS = "accountants";
-    const SERVICE_PROVIDERS = "service_providers";
+    const EMPLOYEES = "employees";
 
     public static $roles = [
-        self::ACCOUNTANTS => "Accountant Users",
-        self::COMPANIES => "Company Users",
-        self::CONTROLLERS => "Controller Users",
-        self::SERVICE_PROVIDERS => "Service Provider Users",
+        self::EMPLOYEES => "Employees",
         self::SUPER_ADMIN => "Super Admin",
     ];
 
     public function getFullNameAttribute(){
         return $this->name.' ('.$this->email.')';
-    }
-
-    public function company(){
-        return $this->belongsTo(Account::class, 'company_ids');
-    }
-
-    public function service_provider(){
-        return $this->belongsTo(Account::class, 'company_ids');
     }
 }
