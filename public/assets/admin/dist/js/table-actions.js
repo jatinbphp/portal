@@ -58,8 +58,8 @@ $(function () {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },
-            {data: 'name_of_task', name: 'name_of_task'},
-            {data: 'linked_to_category', name: 'linked_to_category',orderable: false},
+            {data: 'name', name: 'name'},
+            {data: 'category_ids', name: 'category_ids',orderable: false},
             {data: 'status', "width": "10%",  name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'action', "width": "12%",  name: 'action', orderable: false},

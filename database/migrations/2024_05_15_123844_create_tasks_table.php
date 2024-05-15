@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->string('name_of_task')->nullable();
-            $table->string('linked_to_category')->nullable();
+            $table->string('name')->nullable();
+            $table->longText('category_ids')->nullable();
             $table->string('status')->default('active');
             $table->softDeletes();
             $table->timestamps();

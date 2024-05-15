@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name_of_task', 'linked_to_category','status'];
+    protected $fillable = ['name', 'category_ids','status'];
 
     const STATUS_ACTIVE     = 'active';
     const STATUS_INACTIVE   = 'inactive';
@@ -22,7 +22,7 @@ class Task extends Model
 
     public function getCategoryNamesAttribute()
     {
-        $categoryIds = explode(',', $this->linked_to_category);
+        $categoryIds = explode(',', $this->category_ids);
         return Category::whereIn('id', $categoryIds)->pluck('name')->toArray();
     }
 

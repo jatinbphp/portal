@@ -24,9 +24,10 @@ class TaskController extends Controller
                     $row['table_name'] = 'tasks';
                     return view('admin.common.status-buttons', $row);
                 })
-                ->editColumn('linked_to_category', function ($row) {
-                    return implode(', ', $row->category_names);
-                })
+                ->editColumn('category_ids', function ($row) {
+                    $row['buttons'] = $row->category_names;
+                    return view('admin.task.category-buttons', $row);
+                })    
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'tasks';
                     $row['section_title'] = 'Task';
@@ -49,7 +50,7 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $input = $request->all();
-        $input['linked_to_category'] = !empty($request->linked_to_category) ? implode(',', $request->linked_to_category) : '';
+        $input['category_ids'] = !empty($request->category_ids) ? implode(',', $request->category_ids) : '';
         Task::create($input);
         \Session::flash('success', 'Task has been inserted successfully!');
         return redirect()->route('tasks.index');
@@ -71,7 +72,7 @@ class TaskController extends Controller
     public function update(TaskRequest $request, string $id)
     {
         $input = $request->all();
-        $input['linked_to_category'] = !empty($request->linked_to_category) ? implode(',', $request->linked_to_category) : '';
+        $input['category_ids'] = !empty($request->category_ids) ? implode(',', $request->category_ids) : '';
         $task  = Task::find($id);
         $task->update($input);
         \Session::flash('success','Task has been updated successfully!');
