@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $appends = ['full_name'];
    
-    protected $fillable = ['company_ids', 'category_ids', 'branch_name', 'name', 'email', 'password', 'role', 'status'];
+    protected $fillable = ['category_ids', 'branch_name', 'name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
