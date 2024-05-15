@@ -12,7 +12,7 @@
 
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-            @include('admin.common.label', ['field' => 'status', 'labelText' => 'Status', 'isRequired' => false])
+            @include('admin.common.label', ['field' => 'status', 'labelText' => 'Status', 'isRequired' => true])
             
             @include('admin.common.active-inactive-buttons', [                
                 'checkedKey' => isset($category) ? $category->status : 'active'
