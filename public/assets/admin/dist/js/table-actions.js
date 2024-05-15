@@ -41,7 +41,7 @@ $(function () {
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'action', "width": "12%",  name: 'action', orderable: false},
         ],
-        "order": [[1, "ASC"]]
+        "order": [[0, "DESC"]]
     });
 
     //Task Table

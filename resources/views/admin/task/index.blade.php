@@ -24,7 +24,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Task Name</th>
-                                        <th>Category</th>
+                                        <th>Categories</th>
                                         <th>Status</th>
                                         <th>Date Created</th>
                                         <th>Action</th>
