@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     protected $appends = ['full_name'];
    
-    protected $fillable = ['company_ids', 'branch_name', 'name', 'email', 'password', 'role', 'status'];
+    protected $fillable = ['company_ids', 'category_ids', 'branch_name', 'name', 'email', 'password', 'role', 'status'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -48,5 +48,9 @@ class User extends Authenticatable
 
     public function getFullNameAttribute(){
         return $this->name.' ('.$this->email.')';
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

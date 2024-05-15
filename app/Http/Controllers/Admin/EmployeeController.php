@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DataTables;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EmployeeRequest;
 
@@ -45,13 +46,15 @@ class EmployeeController extends Controller
     }
 
     public function create(){
-        $data['menu'] = 'Employees';
+        $data['menu']       = 'Employees';
+        $data['categories'] = Category::where('status', 'active')->orderBy('name', 'ASC')->pluck('name','id'); 
         return view("admin.employee.create",$data);
     }
 
     public function store(EmployeeRequest $request){        
-        $input = $request->all();
-        $user = User::create($input);
+        $input                  = $request->all();
+        $input['category_ids']  = !empty($request->category_ids) ? implode(',', $request->category_ids) : null;
+        $user                   = User::create($input);
 
         // Flash success message and redirect
         \Session::flash('success', 'Employee has been inserted successfully!');
@@ -70,8 +73,9 @@ class EmployeeController extends Controller
     }
 
     public function edit($id){
-        $data['menu'] = 'Employees';
-        $data['user'] = User::findOrFail($id);
+        $data['menu']       = 'Employees';
+        $data['categories'] = Category::where('status', 'active')->orderBy('name', 'ASC')->pluck('name','id'); 
+        $data['user']       = User::findOrFail($id);
         return view('admin.employee.edit',$data);
     }
 
@@ -85,7 +89,8 @@ class EmployeeController extends Controller
         }
 
         // Retrieve all input data from the request
-        $input = $request->all();
+        $input                  = $request->all();
+        $input['category_ids']  = !empty($request->category_ids) ? implode(',', $request->category_ids) : null;
 
         // Update the user data
         $user->update($input);

@@ -21,6 +21,22 @@
             @include('admin.common.errors', ['field' => 'email'])
         </div>
     </div>
+
+    <div class="col-md-3">
+        <div class="form-group{{ $errors->has('branch_name') ? ' has-error' : '' }}">
+            @include('admin.common.label', ['field' => 'branch_name', 'labelText' => 'Branch Name', 'isRequired' => true])
+            {!! Form::text('branch_name', null, ['class' => 'form-control', 'placeholder' => 'Enter Branch Name', 'id' => 'branch_name']) !!}
+            @include('admin.common.errors', ['field' => 'branch_name'])
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="form-group{{ $errors->has('category_ids') ? ' has-error' : '' }}">
+            @include('admin.common.label', ['field' => 'category_ids', 'labelText' => 'Category', 'isRequired' => true])
+            {!! Form::select("category_ids[]", $categories ?? array(), !empty($user['category_ids']) ? explode(",", $user['category_ids']) : null, ["class" => "form-control select2 w-100", "id" => "category_ids", "multiple" => "multiple", 'data-placeholder' => 'Please Select', "data-maximum-selection-length" => "3"]) !!}
+            @include('admin.common.errors', ['field' => 'category_ids'])
+        </div>
+    </div>
 </div>
 
 <div class="row">

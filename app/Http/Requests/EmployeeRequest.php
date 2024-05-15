@@ -23,9 +23,11 @@ class EmployeeRequest extends FormRequest
         $userId = $this->route('employee');
         
         $rules = [
-            'name' => 'required',
-            'password' => 'confirmed|min:6',
-            'status' => 'required',
+            'name'          => 'required',
+            'branch_name'   => 'required|max:100',
+            'category_ids'  => 'required',
+            'password'      => 'confirmed|min:6',
+            'status'        => 'required',
             'email' => [
                 'required', // Make the email field optional
                 'email',  // Allow null values
@@ -42,8 +44,9 @@ class EmployeeRequest extends FormRequest
 
     public function messages(){
         return [
-            'email.required'  => "The email address field is required.",
-            'email.email'  => "The email address field must be a valid email address.",
+            'email.required'        => "The email address field is required.",
+            'email.email'           => "The email address field must be a valid email address.",
+            'category_ids.required' => "The category field is required.",
         ];
     }
 }
