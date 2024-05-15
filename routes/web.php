@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\TaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,4 +53,7 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Employees*/
     Route::resource('employees', EmployeeController::class);
+
+    /*Tasks*/
+    Route::resource('tasks', TaskController::class);
 });

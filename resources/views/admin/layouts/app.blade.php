@@ -85,16 +85,23 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('employees.index') }}" class="nav-link @if(isset($menu) && $menu=='Employees') active @endif">
-                            <i class="far fa-user-circle nav-icon"></i>
-                            <p>Employees</p>
+                        <a href="{{ route('categories.index') }}" class="nav-link @if(isset($menu) && $menu=='Categories') active @endif">
+                            <i class="far fa-list-alt nav-icon"></i>
+                            <p>Categories</p>
                         </a>
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('categories.index') }}" class="nav-link @if(isset($menu) && $menu=='Categories') active @endif">
-                            <i class="far fa-list-alt nav-icon"></i>
-                            <p>Categories</p>
+                        <a href="{{ route('tasks.index') }}" class="nav-link @if(isset($menu) && $menu=='Tasks') active @endif">
+                            <i class="fas fa-tasks nav-icon"></i>
+                            <p>Tasks</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('employees.index') }}" class="nav-link @if(isset($menu) && $menu=='Employees') active @endif">
+                            <i class="far fa-user-circle nav-icon"></i>
+                            <p>Employees</p>
                         </a>
                     </li>
                 </ul>

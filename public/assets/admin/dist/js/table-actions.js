@@ -44,9 +44,33 @@ $(function () {
         "order": [[1, "ASC"]]
     });
 
+    //Task Table
+    var tasks_table = $('#taskTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500 ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },
+            {data: 'name_of_task', name: 'name_of_task'},
+            {data: 'linked_to_category', name: 'linked_to_category',orderable: false},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+            {data: 'created_at', "width": "15%", name: 'created_at'},
+            {data: 'action', "width": "12%",  name: 'action', orderable: false},
+        ],
+        "order": [[1, "ASC"]]
+    });
+
     var sectionTableMap = {
         'categories_table': categories_table,
         'employees_table': employees_table,
+        'tasks_table': tasks_table,
     };
 
     //Delete Record
