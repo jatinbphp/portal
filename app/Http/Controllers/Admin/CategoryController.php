@@ -47,6 +47,17 @@ class CategoryController extends Controller{
         \Session::flash('success', 'Category has been inserted successfully!');
         return redirect()->route('categories.index');
     }
+
+    public function show($id) {
+        $category = Category::findOrFail($id);
+        $required_columns = ['id', 'name', 'status', 'created_at'];
+
+        return view('admin.common.show_modal', [
+            'section_info' => $category->toArray(),
+            'type' => 'Category',
+            'required_columns' => $required_columns
+        ]);
+    }
    
     public function edit(string $id){
         $data['menu']       = 'Categories';

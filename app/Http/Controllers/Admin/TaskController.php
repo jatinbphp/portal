@@ -56,9 +56,15 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function show(string $id)
-    {
-        //
+    public function show($id) {
+        $task = Task::findOrFail($id);
+        $required_columns = ['id', 'name', 'status', 'created_at'];
+
+        return view('admin.common.show_modal', [
+            'section_info' => $task->toArray(),
+            'type' => 'Task',
+            'required_columns' => $required_columns
+        ]);
     }
 
     public function edit(string $id)
