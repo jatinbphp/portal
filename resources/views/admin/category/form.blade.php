@@ -9,18 +9,14 @@
             @include('admin.common.errors', ['field' => 'name'])
         </div>
     </div>
+
     <div class="col-md-6">
         <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-            @include('admin.common.label', ['field' => 'status', 'labelText' => 'Status', 'isRequired' => true])
-
-            <div class="">
-                @foreach (\App\Models\Category::$status as $key => $value)
-                    @php $checked = !isset($category) && $key == 'active'?'checked':''; @endphp
-                    <label>
-                        {!! Form::radio('status', $key, null, ['class' => 'flat-red',$checked]) !!} <span style="margin-right: 10px">{{ $value }}</span>
-                    </label>
-                @endforeach
-            </div>
+            @include('admin.common.label', ['field' => 'status', 'labelText' => 'Status', 'isRequired' => false])
+            
+            @include('admin.common.active-inactive-buttons', [                
+                'checkedKey' => isset($category) ? $category->status : 'active'
+            ])
         </div>
     </div>
 </div>

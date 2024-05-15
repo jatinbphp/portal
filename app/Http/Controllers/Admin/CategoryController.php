@@ -50,13 +50,13 @@ class CategoryController extends Controller{
    
     public function edit(string $id){
         $data['menu']       = 'Categories';
-        $data['category']   = Category::where('id',$id)->first();        
+        $data['category']   = Category::findOrFail($id);        
         return view('admin.category.edit',$data);
     }
 
     public function update(CategoryRequest $request, string $id){
         $input      = $request->all();
-        $category   = Category::find($id);
+        $category   = Category::findOrFail($id);
 
         if(empty($category)){
             return redirect()->route('categories.index');
@@ -68,7 +68,7 @@ class CategoryController extends Controller{
     }
 
     public function destroy(string $id){
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
 
         if(empty($category)){
             return response()->json(['status' => false], 200);
