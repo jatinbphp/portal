@@ -52,9 +52,9 @@ class EmployeeController extends Controller
     }
 
     public function store(EmployeeRequest $request){        
-        $input                  = $request->all();
+        $input = $request->all();
         $input['category_ids']  = !empty($request->category_ids) ? implode(',', $request->category_ids) : null;
-        $user                   = User::create($input);
+        $user = User::create($input);
 
         // Flash success message and redirect
         \Session::flash('success', 'Employee has been inserted successfully!');

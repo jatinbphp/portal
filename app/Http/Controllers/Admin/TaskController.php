@@ -81,6 +81,7 @@ class TaskController extends Controller
         $input['category_ids'] = !empty($request->category_ids) ? implode(',', $request->category_ids) : '';
         $task  = Task::find($id);
         $task->update($input);
+        
         \Session::flash('success','Task has been updated successfully!');
         return redirect()->route('tasks.index');
     }

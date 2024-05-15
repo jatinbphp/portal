@@ -60,20 +60,16 @@ class CategoryController extends Controller{
     }
    
     public function edit(string $id){
-        $data['menu']       = 'Categories';
-        $data['category']   = Category::findOrFail($id);        
+        $data['menu'] = 'Categories';
+        $data['category'] = Category::findOrFail($id);        
         return view('admin.category.edit',$data);
     }
 
     public function update(CategoryRequest $request, string $id){
-        $input      = $request->all();
-        $category   = Category::findOrFail($id);
-
-        if(empty($category)){
-            return redirect()->route('categories.index');
-        }
-
+        $input = $request->all();
+        $category = Category::findOrFail($id);
         $category->update($input);
+        
         \Session::flash('success','Category has been updated successfully!');
         return redirect()->route('categories.index');
     }
