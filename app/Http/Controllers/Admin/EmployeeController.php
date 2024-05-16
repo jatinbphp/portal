@@ -36,7 +36,9 @@ class EmployeeController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'employees';
                     $row['section_title'] = 'Employee';
-                    $row['show'] = false;
+                    $row['view']    = true;
+                    $row['edit']    = true;
+                    $row['delete']  = true;
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);

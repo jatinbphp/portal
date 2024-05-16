@@ -31,7 +31,8 @@ class TaskController extends Controller
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'tasks';
                     $row['section_title'] = 'Task';
-                    $row['show'] = false;
+                    $row['edit']    = true;
+                    $row['delete']  = true;
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);
