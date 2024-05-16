@@ -43,6 +43,13 @@
                                                         @case('status')
                                                             {!! renderStatusColumn($section_info[$key]) !!}
                                                             @break
+                                                        @case('category_name')
+                                                                @if (!empty($section_info['category_name']))
+                                                                    @foreach ($section_info['category_name'] as $name)
+                                                                        {!! renderCategoryColumn($name) !!}
+                                                                    @endforeach
+                                                                @endif
+                                                            @break
                                                         @default
                                                             {!! !empty($section_info[$key]) ? $section_info[$key] : '-' !!}
                                                     @endswitch
@@ -50,7 +57,6 @@
                                             </tr>
                                         @endif
                                     @endforeach
-
                                 </tbody>
                             </table>
                         </div>
@@ -85,5 +91,9 @@ function renderIdColumn($info) {
 function renderStatusColumn($info) {
     $class = $info == 'active' ? 'success' : 'danger';
     return '<span class="badge badge-' . $class . '">' . ucfirst($info) . '</span>';
+}
+
+function renderCategoryColumn($info) {
+    return '<span class="badge badge-success p-1 mb-1">' . ucfirst($info) . '</span>';
 }
 @endphp

@@ -63,10 +63,21 @@ class EmployeeController extends Controller
 
     public function show($id) {
         $user = User::findOrFail($id);
-        $required_columns = ['id', 'name', 'email', 'status', 'created_at'];
+        $category_ids= explode(',', $user['category_ids']);
+        $category_name= "";
+        
+        if(!empty($category_ids))
+        {
+            $category_name= Category::whereIn('id', $category_ids)->pluck('name')->toArray();
+        }
+        
+        $required_columns = ['id', 'category_name' , 'branch_name', 'name', 'email', 'status', 'created_at'];
+
+        $section_info = $user->toArray();
+        $section_info['category_name'] = $category_name;
 
         return view('admin.common.show_modal', [
-            'section_info' => $user->toArray(),
+            'section_info' => $section_info,
             'type' => 'Employee',
             'required_columns' => $required_columns
         ]);
