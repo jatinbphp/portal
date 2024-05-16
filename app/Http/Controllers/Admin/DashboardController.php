@@ -14,7 +14,7 @@ class DashboardController extends Controller
 {
     public function index(){
         $data['menu'] = "Dashboard";
-        $data['total_employees'] = User::count();
+        $data['total_employees'] = User::where('role','employees')->count();
         $data['total_categories'] = Category::count();
         $data['total_tasks'] = Task::count();
         return view('admin.dashboard', $data);
