@@ -105,6 +105,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('daily-performance.index') }}" class="nav-link @if(isset($menu) && $menu=='Daily Performance') active @endif">
+                            <i class="fa fa-chart-bar nav-icon"></i>
+                            <p>Daily Performance</p>
+                        </a>
+                    </li>
+
                     <li class="nav-item @if(isset($menu) && in_array($menu, ['Infringements by Category Report', 'Infringements by Employee Report'])) menu-open  @endif">
                         <a href="#" class="nav-link @if(isset($menu) && in_array($menu, ['Infringements by Category Report','Infringements by Employee Report'])) active @endif">
                             <i class="nav-icon fa fa-flag"></i>

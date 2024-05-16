@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\DailyPerformanceController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,6 +59,9 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Tasks*/
     Route::resource('tasks', TaskController::class);
+
+    /*Daily Performance*/
+    Route::resource('daily-performance', DailyPerformanceController::class);
 
     /*Reports*/
     Route::get('reports/category_report', [ReportController::class, 'index_category_report'])->name('reports.category_report');

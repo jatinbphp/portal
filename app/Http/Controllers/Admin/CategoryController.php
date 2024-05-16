@@ -27,7 +27,9 @@ class CategoryController extends Controller{
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'categories';
                     $row['section_title'] = 'Category';
-                    $row['show'] = false;
+                    $row['show']    = false;
+                    $row['edit']    = true;
+                    $row['delete']  = true;
                     return view('admin.common.action-buttons', $row);
                 })
                 ->make(true);

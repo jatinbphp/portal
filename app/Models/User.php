@@ -50,7 +50,12 @@ class User extends Authenticatable
         return $this->name.' ('.$this->email.')';
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class, 'category_id');
+    public function categories(){
+        return $this->belongsToMany(Category::class);
     }
+
+    // public function tasks(){
+    //     return $this->hasManyThrough(Task::class, Category::class);
+    // }
+
 }

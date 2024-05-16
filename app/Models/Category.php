@@ -19,4 +19,12 @@ class Category extends Model{
         self::STATUS_ACTIVE     => 'Active',
         self::STATUS_INACTIVE   => 'In Active',
     ];
+
+    public function tasks(){
+        return $this->hasMany(Task::class, 'category_ids');
+    }
+
+    public function users(){
+        return $this->hasMany(User::class, 'category_ids');
+    }
 }

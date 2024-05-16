@@ -26,4 +26,9 @@ class Task extends Model
         return Category::whereIn('id', $categoryIds)->pluck('name')->toArray();
     }
 
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+
+
 }

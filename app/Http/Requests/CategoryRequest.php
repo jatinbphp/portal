@@ -15,12 +15,16 @@ class CategoryRequest extends FormRequest{
 
     public function rules(): array
     {
-        return [
+        $id = $this->route('category');
+        
+        $rules = [
             'name' => [
                 'required', 
-                Rule::unique('categories', 'name'),
+                Rule::unique('categories', 'name')->ignore($id),
             ],
             'status'    => 'required',
         ];
+
+        return $rules;
     }
 }
