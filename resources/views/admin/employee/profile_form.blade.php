@@ -20,8 +20,6 @@
             @include('admin.common.errors', ['field' => 'email'])
         </div>
     </div>
-</div>
-<div class="row">
     <div class="col-md-3">
         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
             @include('admin.common.label', ['field' => 'password', 'labelText' => 'Password', 'isRequired' => false])
