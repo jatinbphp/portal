@@ -67,6 +67,46 @@ $(function () {
         "order": [[1, "ASC"]]
     });
 
+    //Category Report Table
+    var category_report_table = $('#categoryReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500 ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },
+            {data: 'name', name: 'name'},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+        ],
+        "order": [[1, "ASC"]]
+    });
+
+    //  Employee Report Table
+     var employee_report_table = $('#employeeReportTable').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 100,
+        lengthMenu: [ 100, 200, 300, 400, 500 ],
+        ajax: $("#route_name").val(),
+        columns: [
+            {
+                data: 'id', width: '10%', name: 'id',
+                render: function(data, type, row) {
+                    return '#' + data; // Prepend '#' to the 'id' data
+                }
+            },
+            {data: 'name', name: 'name'},
+            {data: 'status', "width": "10%",  name: 'status', orderable: false},
+        ],
+        "order": [[1, "ASC"]]
+    });
+
     var sectionTableMap = {
         'categories_table': categories_table,
         'employees_table': employees_table,

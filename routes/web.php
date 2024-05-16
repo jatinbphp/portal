@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,4 +57,8 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Tasks*/
     Route::resource('tasks', TaskController::class);
+
+    /*Reports*/
+    Route::get('reports/category_report', [ReportController::class, 'index_category_report'])->name('reports.category_report');
+    Route::get('reports/employee_report', [ReportController::class, 'index_employee_report'])->name('reports.employee_report');
 });

@@ -104,6 +104,30 @@
                             <p>Employees</p>
                         </a>
                     </li>
+
+                    <li class="nav-item @if(isset($menu) && in_array($menu, ['Infringements by Category Report', 'Infringements by Employee Report'])) menu-open  @endif">
+                        <a href="#" class="nav-link @if(isset($menu) && in_array($menu, ['Infringements by Category Report','Infringements by Employee Report'])) active @endif">
+                            <i class="nav-icon fa fa-flag"></i>
+                            <p>
+                                Reports
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('reports.category_report') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Category Report') active @endif">
+                                    <i class="fas fa-folder-open"></i>
+                                    <p>Infringements by Category</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('reports.employee_report') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Employee Report') active @endif">
+                                    <i class="fas fa-user"></i>
+                                    <p>Infringements by Employee</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
         </div>
