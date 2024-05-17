@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileUpdateController;
 use App\Http\Controllers\Admin\CommonController;
 use App\Http\Controllers\Admin\ImageController;
-use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\TaskController;
@@ -48,9 +47,6 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
     /*Common*/
     Route::post('common/changestatus', [CommonController::class,'changeStatus'])->name('common.changestatus');
 
-    /*Users*/
-    Route::resource('users', UserController::class);
-
     /*Categories*/
     Route::resource('categories', CategoryController::class);
 
@@ -62,6 +58,11 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Daily Performance*/
     Route::resource('daily-performance', DailyPerformanceController::class);
+    Route::get('daily-performance/{id}/list', [DailyPerformanceController::class, 'taskList'])->name('daily-performance.taskList');
+    Route::post('daily-performance/{id}', [DailyPerformanceController::class, 'updateTaskData'])->name('daily-performance.update');
+
+
+
 
     /*Reports*/
     Route::get('reports/category_report', [ReportController::class, 'index_category_report'])->name('reports.category_report');
