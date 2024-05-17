@@ -55,7 +55,7 @@ class EmployeeController extends Controller
 
     public function store(EmployeeRequest $request){        
         $input = $request->all();
-        $input['category_ids']  = !empty($request->category_ids) ? implode(',', $request->category_ids) : null;
+        $input['category_ids']  = !empty($request->category_ids) ? json_encode($request->category_ids) : [];
         $user = User::create($input);
 
         // Flash success message and redirect
@@ -65,7 +65,7 @@ class EmployeeController extends Controller
 
     public function show($id) {
         $user = User::findOrFail($id);
-        $category_ids= explode(',', $user['category_ids']);
+        $category_ids= json_decode($user['category_ids']);
         $category_name= "";
         
         if(!empty($category_ids))
@@ -103,7 +103,7 @@ class EmployeeController extends Controller
 
         // Retrieve all input data from the request
         $input                  = $request->all();
-        $input['category_ids']  = !empty($request->category_ids) ? implode(',', $request->category_ids) : null;
+        $input['category_ids']  = !empty($request->category_ids) ? json_encode($request->category_ids) : [];
 
         // Update the user data
         $user->update($input);

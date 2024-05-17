@@ -51,7 +51,7 @@ class TaskController extends Controller
     public function store(TaskRequest $request)
     {
         $input = $request->all();
-        $input['category_ids'] = !empty($request->category_ids) ? implode(',', $request->category_ids) : '';
+        $input['category_ids'] = !empty($request->category_ids) ? json_encode($request->category_ids) : [];
         Task::create($input);
         \Session::flash('success', 'Task has been inserted successfully!');
         return redirect()->route('tasks.index');
@@ -59,7 +59,7 @@ class TaskController extends Controller
 
     public function show($id) {
         $task = Task::findOrFail($id);
-        $category_ids= explode(',', $task['category_ids']);
+        $category_ids= json_decode($task['category_ids']);
         $category_name= "";
 
         if(!empty($category_ids))
@@ -90,7 +90,7 @@ class TaskController extends Controller
     public function update(TaskRequest $request, string $id)
     {
         $input = $request->all();
-        $input['category_ids'] = !empty($request->category_ids) ? implode(',', $request->category_ids) : '';
+        $input['category_ids'] = !empty($request->category_ids) ? json_encode($request->category_ids) : [];
         $task  = Task::find($id);
         $task->update($input);
         

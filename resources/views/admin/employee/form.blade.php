@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="form-group{{ $errors->has('category_ids') ? ' has-error' : '' }}">
             @include('admin.common.label', ['field' => 'category_ids', 'labelText' => 'Category', 'isRequired' => true])
-            {!! Form::select("category_ids[]", $categories ?? array(), !empty($user['category_ids']) ? explode(",", $user['category_ids']) : null, ["class" => "form-control select2 w-100", "id" => "category_ids", "multiple" => "multiple", 'data-placeholder' => 'Please Select', "data-maximum-selection-length" => "3"]) !!}
+            {!! Form::select("category_ids[]", $categories ?? array(), !empty($user['category_ids']) ? json_decode($user['category_ids']) : null, ["class" => "form-control select2 w-100", "id" => "category_ids", "multiple" => "multiple", 'data-placeholder' => 'Please Select', "data-maximum-selection-length" => "3"]) !!}
             @include('admin.common.errors', ['field' => 'category_ids'])
         </div>
     </div>

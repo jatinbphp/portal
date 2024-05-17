@@ -47,7 +47,7 @@ class DailyPerformanceController extends Controller{
         $data['menu']       = 'Daily Performance'; 
         $employee           = User::where('id', $request->id)->first();
         if(!isset($employee->category_ids)) return redirect()->route('daily-performance.index')->with('warning', 'Error occured in retrieving employees data');
-        $category_ids       = explode(',', $employee->category_ids);
+        $category_ids       = json_decode($employee->category_ids);
         $data['categories'] = Category::whereIn('id', $category_ids)->pluck('name', 'id')->toArray();
         $data['tasks']      = Task::where(function ($query) use ($category_ids) {
                     foreach ($category_ids as $category_id) {

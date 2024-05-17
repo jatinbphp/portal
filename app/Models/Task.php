@@ -22,7 +22,7 @@ class Task extends Model
 
     public function getCategoryNamesAttribute()
     {
-        $categoryIds = explode(',', $this->category_ids);
+        $categoryIds = json_decode($this->category_ids);
         return Category::whereIn('id', $categoryIds)->pluck('name')->toArray();
     }
 
