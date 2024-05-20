@@ -30,5 +30,8 @@ class Task extends Model
         return $this->belongsToMany(Category::class);
     }
 
+    public function daily_performance(){
+        return $this->belongsTo(DailyPerformance::class, 'task_id');
+    }
 
 }

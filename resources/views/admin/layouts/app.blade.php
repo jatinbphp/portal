@@ -128,7 +128,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('reports.employee_report') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Employee Report') active @endif">
+                                <a href="{{ route('reports.employees') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Employee Report') active @endif">
                                     <i class="fas fa-user"></i>
                                     <p>Infringements by Employee</p>
                                 </a>

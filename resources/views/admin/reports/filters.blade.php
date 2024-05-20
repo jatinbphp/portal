@@ -12,7 +12,7 @@
     <div class="col-md-3">
         <div class="form-group">
             @include('admin.common.label', ['field' => 'employee', 'labelText' => 'Employee', 'isRequired' => false])
-            {!! Form::select("employee", ['' => 'Please Select'] + ($employees->toArray() ?? []), null, ["class" => "form-control select2", "id" => "employee"]) !!}
+            {!! Form::select("user_id", ['' => 'Please Select'] + ($employees->toArray() ?? []), null, ["class" => "form-control select2", "id" => "employee"]) !!}
         </div>
     </div>
     @endif
@@ -29,14 +29,16 @@
             'type' => 'button',
             'id' => 'clear-filter',
             'class' => 'btn btn-danger',
-            'data-type' => $type
+            'data-type' => $type ?? "",
+            'onclick' => 'handleClear(event)'  
         ]) !!}
         
         {!! Form::button('<i class="fa fa-filter" aria-hidden="true"></i>', [
             'type' => 'button',
             'id' => 'apply-filter',
             'class' => 'btn btn-info',
-            'data-type' => $type
+            'data-type' => $type ?? "",
+            'onclick' => 'handleFilter(event)'  
         ]) !!}
     </div>
 </div>
