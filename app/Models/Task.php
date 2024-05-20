@@ -33,5 +33,4 @@ class Task extends Model
     public function daily_performance(){
         return $this->belongsTo(DailyPerformance::class, 'task_id');
     }
-
 }
