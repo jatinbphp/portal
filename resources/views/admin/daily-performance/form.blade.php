@@ -1,8 +1,12 @@
 {!! Form::hidden('redirects_to', URL::previous()) !!}
 {!! Form::hidden('user_id', $employee->id ?? null, ['id' => 'user_id']) !!}
-@foreach ($category_ids as $category_id)
-                {!! Form::hidden('category_ids[]', $category_id) !!}
-@endforeach
+
+@if(isset($category_ids))
+    @foreach($category_ids as $category_id)
+        {!! Form::hidden('category_ids[]', $category_id) !!}
+    @endforeach
+@endif
+
 @if(isset($user))
     @include('admin.common.password-alert')
 @endif

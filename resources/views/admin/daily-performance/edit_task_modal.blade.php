@@ -27,9 +27,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-                                        @include('admin.common.label', ['field' => 'date', 'labelText' => 'Date', 'isRequired' => true])
+                                        @include('admin.common.label', ['field' => 'date', 'labelText' => 'Date Created', 'isRequired' => true])
 
-                                        {!! Form::text('date', !empty($daily_performance->datetime)?$daily_performance->datetime:null, ['class' => 'form-control', 'placeholder' => 'Select Date', 'id' => 'date']) !!}
+                                        {!! Form::input('datetime-local', 'datetime', $daily_performance->datetime ? date('Y-m-d\TH:i:s', strtotime($daily_performance->datetime)) : date('Y-m-d\TH:i'), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
                                         
                                         @include('admin.common.errors', ['field' => 'date'])
                                     </div>
@@ -45,19 +45,19 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><i class="fa fa-times pr-1"></i> Close</button>
-    <button type="button" class="btn btn-sm btn-primary" id="updateButtondata"><i class="fa fa-check pr-1"></i> Update</button>
+    <button type="button" class="btn btn-sm btn-primary" id="updateButtondata" data-url="{{ url('admin/'.$section_name.'/'.$daily_performance->id) }}"><i class="fa fa-check pr-1"></i> Update</button>
 </div> 
 
 <script>
-   $(document).ready(function() {
-    $('#updateButtondata').on('click', function() {
-        
+    $('#updateButtondata').on('click', function(event) {
+        event.preventDefault();
         var form = $('#TaskUpdateForm')[0];
         var formData = new FormData(form);
-
+        var url = $(this).attr("data-url");      
+        
         $.ajax({
-            url: '{{ route("daily-performance.update", $daily_performance->id ?? 0) }}', 
-            type: 'Post',
+            url: url, 
+            type: 'POST',
             data: formData, 
             processData: false,
             contentType: false,
@@ -67,13 +67,15 @@
             success: function(response) {
                 console.log(response); 
                 if (response.status === 'success') {
-                    location.reload(); 
+                    $('#commonModal').modal('hide'); 
+                    refreshDataTable();
+                    swal("Updated", "Daily peformance task data updated successfully!", "success");
                 } else {
                     alert('Error: ' + response.message);
                 }
             },
             error: function(response) {
-                console.error(response);le
+                console.error(response); 
                 var errors = response.responseJSON.errors;
                 $.each(errors, function(key, value) {
                     alert(value); 
@@ -81,7 +83,9 @@
             }
         });
     });
-});
 
+    function refreshDataTable() {
+        $('#tasklistTable').DataTable().ajax.reload();
+    }
 </script>
 

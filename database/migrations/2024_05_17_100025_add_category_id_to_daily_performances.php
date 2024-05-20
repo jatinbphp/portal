@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('daily_performances', function (Blueprint $table) {
-            $table->integer('category_id')->after('task_id');
+            $table->longText('category_id')->after('task_id');
+            $table->softDeletes();
         });
     }
 
@@ -22,7 +23,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('daily_performances', function (Blueprint $table) {
-            $table->dropColumn('category_id');
         });
     }
 };
