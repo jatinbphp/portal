@@ -10,10 +10,12 @@
                 <div class="col-12">
                     <div class="card card-info card-outline">
                         <div class="card-header">
-                            <h3 class="card-title">Manage {{$menu}}</h3>
+                            <h3 class="card-title">
+                                <span class=" btn bg-danger">{{ strtoupper($employee->name) . " - " . strtoupper(implode(", ", $categories)) }}</span>
+                            </h3>
                         </div>
                         <div class="card-body table-responsive">
-                             <input type="hidden" id="route_name" value="{{ route('daily-performance.taskList', ['id' => $id]) }}">
+                             <input type="hidden" id="route_name" value="{{ route('daily-performance.tasks', ['id' => $id]) }}">
                             <table id="tasklistTable" class="table table-bordered table-striped datatable-dynamic">
                                 <thead>
                                     <tr>

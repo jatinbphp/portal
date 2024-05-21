@@ -85,8 +85,8 @@ class DailyPerformanceController extends Controller{
         return redirect()->route('daily-performance.index');
     }
 
-    public function taskList(Request $request, $id){
-        $data['menu'] = 'Task List';
+    public function view_tasks(Request $request, $id){
+        $data['menu'] = 'Employee Tasks';
         $data['id'] = $id;
         $performance= DailyPerformance::with('task')->where('user_id', $id)->orderBy('datetime','desc')->get();
     
@@ -108,8 +108,10 @@ class DailyPerformanceController extends Controller{
                 })
                 ->make(true);
         }
-        
-        return view('admin.daily-performance.task_list', $data);
+   
+        $data['employee']       = User::where('id', $id)->first();
+        $data['categories']     = Category::whereIn('id', json_decode($data['employee']->category_ids, true))->pluck('name','id')->toArray();
+        return view('admin.daily-performance.tasks', $data);
     }
 
     public function show($id){

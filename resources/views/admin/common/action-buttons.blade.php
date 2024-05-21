@@ -29,7 +29,7 @@
 @endif
 
 @if(isset($listing) && $listing === true)
-    <a href="{{ url('admin/'.$section_name.'/'.$id.'/list') }}" title="Listing" class="btn btn-sm btn-info tip">
+    <a href="{{ url('admin/'.$section_name.'/'.$id.'/tasks') }}" title="Listing" class="btn btn-sm btn-info tip">
         <i class="fa fa-list"></i>
     </a>
 @endif

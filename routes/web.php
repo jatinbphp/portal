@@ -58,7 +58,7 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
 
     /*Daily Performance*/
     Route::resource('daily-performance', DailyPerformanceController::class);
-    Route::get('daily-performance/{id}/list', [DailyPerformanceController::class, 'taskList'])->name('daily-performance.taskList');
+    Route::get('daily-performance/{id}/tasks', [DailyPerformanceController::class, 'view_tasks'])->name('daily-performance.tasks');
     Route::post('daily-performance/{id}', [DailyPerformanceController::class, 'update'])->name('daily-performance.update');
 
     /*Reports*/
