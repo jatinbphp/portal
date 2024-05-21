@@ -72,11 +72,11 @@ class DailyPerformanceController extends Controller{
 
         foreach($input['task_id'] as $key => $value){
             if(isset($input['comment'][$key])){
-                $data['user_id']    = $input['user_id'];
-                $data['category_id'] = json_encode($category_ids ?? null);
-                $data['task_id']    = $input['task_id'][$key] ?? null;
-                $data['datetime']   = $input['datetime'][$key] ?? date("Y-m-d H:i:s");
-                $data['comment']    = $input['comment'][$key];
+                $data['user_id']        = $input['user_id'];
+                $data['category_id']    = json_encode($category_ids ?? null);
+                $data['task_id']        = $input['task_id'][$key] ?? null;
+                $data['comment']        = $input['comment'][$key];
+                $data['datetime']       = isset($input['datetime'][$key]) ? Carbon::parse($input['datetime'][$key]) : Carbon::now();
                 DailyPerformance::create($data);
             }
         }
@@ -85,8 +85,7 @@ class DailyPerformanceController extends Controller{
         return redirect()->route('daily-performance.index');
     }
 
-    public function taskList(Request $request, $id)
-    {
+    public function taskList(Request $request, $id){
         $data['menu'] = 'Task List';
         $data['id'] = $id;
         $performance= DailyPerformance::with('task')->where('user_id', $id)->orderBy('datetime','desc')->get();
@@ -113,24 +112,20 @@ class DailyPerformanceController extends Controller{
         return view('admin.daily-performance.task_list', $data);
     }
 
-    public function show($id)
-    {
+    public function show($id){
         $daily_performance = DailyPerformance::findOrFail($id);
-    
-        $data['daily_performance']= $daily_performance;
-        $data['title']= "Task";
-        $data['section_name']= "daily-performance";
-    
+        $data['daily_performance']  = $daily_performance;
+        $data['title']              = "Task";
+        $data['section_name']       = "daily-performance";
         return view('admin.daily-performance.edit_task_modal',$data);
     }
 
-    public function updateTaskData(Request $request, string $id)
-    {
+    public function updateTaskData(Request $request, string $id){
         $daily_performance = DailyPerformance::findOrFail($id);
-
+        
         $input = [
             'comment' => $request->comment,
-            'datetime' => !empty($request->datetime) ? \Carbon\Carbon::parse($request->datetime)->format('Y-m-d\TH:i:s') : null
+            'datetime' => isset($request->datetime) ? Carbon::parse($request->datetime)->format('Y-m-d H:i:s') : null
         ];
         
         $daily_performance->update($input);
@@ -141,10 +136,9 @@ class DailyPerformanceController extends Controller{
         ]);
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
         $daily_performance = DailyPerformance::findOrFail($id);
-
+        
         if(empty($daily_performance)){
             return response()->json(['status' => false], 200);
         }

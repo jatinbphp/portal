@@ -21,8 +21,4 @@ class DailyPerformance extends Model
     public function tasks(){
         return $this->hasMany(Task::class, 'id', 'task_id'); 
     }
-
-    public function getDatetimeAttribute($date){
-        return \Carbon\Carbon::createFromFormat('Y-m-d\TH:i:s', $date)->format('Y-m-d H:i:s');
-    }
 }
