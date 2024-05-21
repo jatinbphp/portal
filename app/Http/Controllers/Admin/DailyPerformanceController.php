@@ -117,19 +117,17 @@ class DailyPerformanceController extends Controller{
         $data['daily_performance']  = $daily_performance;
         $data['title']              = "Task";
         $data['section_name']       = "daily-performance";
-        return view('admin.daily-performance.edit_task_modal',$data);
+        return view('admin.daily-performance.modal',$data);
     }
 
-    public function updateTaskData(Request $request, string $id){
+    public function update(DailyPerformanceRequest $request, string $id){
         $daily_performance = DailyPerformance::findOrFail($id);
-        
+        if(empty($request->comment)) return response()->json(['status' => false]);
         $input = [
-            'comment' => $request->comment,
-            'datetime' => isset($request->datetime) ? Carbon::parse($request->datetime)->format('Y-m-d H:i:s') : null
+            'comment'   => $request->comment,
+            'datetime'  => isset($request->datetime) ? Carbon::parse($request->datetime)->format('Y-m-d H:i:s') : Carbon::now()
         ];
-        
         $daily_performance->update($input);
-        
         return response()->json([
             'status' => 'success',
             'message' => 'Daily performance data has been updated successfully!',
