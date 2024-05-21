@@ -82,12 +82,12 @@
             },
         columns: [
             {
-                data: 'id', width: '10%', name: 'id',
+                data: 'id', width: '5%', name: 'id',
                 render: function (data, type, row) {
                     return '#' + data; // Prepend '#' to the 'id' data
                 }
             },
-            {data: 'employee_category', name: 'employee_category'},
+            {data: 'employee_category', name: 'employee_category', "width": "25%"},
             {data: 'action', "width": "70%", orderable: false},
         ],
     });
