@@ -122,7 +122,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('reports.category_report') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Category Report') active @endif">
+                                <a href="{{ route('reports.categories') }}" class="nav-link @if(isset($menu) && $menu=='Infringements by Category Report') active @endif">
                                     <i class="fas fa-folder-open"></i>
                                     <p>Infringements by Category</p>
                                 </a>

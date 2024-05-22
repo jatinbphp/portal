@@ -65,4 +65,6 @@ Route::prefix('admin')->middleware(['admin', 'removePublic'])->group(function ()
     Route::get('reports/category_report', [ReportController::class, 'index_category_report'])->name('reports.category_report');
     Route::get('reports/employees', [ReportController::class, 'employees_report'])->name('reports.employees');
     Route::get('/reports/employees/export', [ReportController::class,'exportEmployeeReport'])->name('reports-employee.export');
+    Route::get('reports/categories', [ReportController::class, 'categories_report'])->name('reports.categories');
+
 });

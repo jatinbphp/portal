@@ -12,25 +12,20 @@ use App\Models\DailyPerformance;
 use Illuminate\Support\Facades\Auth;
 
 
-class ReportController extends Controller
-{
-    public function index_category_report(Request $request){
-        $data['menu'] = 'Infringements by Category Report';
+class ReportController extends Controller{
 
+    //category report
+    public function categories_report(Request $request){
         if ($request->ajax()) {
-            return Datatables::of(Category::select())
-                ->addIndexColumn()
-                ->editColumn('status', function($row){
-                    $row['table_name'] = 'categories';
-                    return view('admin.common.status-buttons', $row);
-                })
-                ->make(true);
+            return $this->handle_ajax_request($request);
         }
+
+        $data['menu'] = 'Infringements by Category Report';
         $data['category']= Category::where('status', 'active')->pluck('name', 'id');
-        return view('admin.reports.index_categories_report', $data);
+        return view('admin.reports.category.index', $data);
     }
 
-
+    //employee report
     public function employees_report(Request $request){
         if ($request->ajax()) {
             return $this->handle_ajax_request($request);
@@ -43,7 +38,10 @@ class ReportController extends Controller
     private function handle_ajax_request(Request $request){
         $users = User::where('id', '!=', Auth::user()->id)
             ->when($request->input('user_id'), function ($query, $user_id) {
-                return $query->where('id', $user_id);
+                return $query->where('id', $user_id); //filter by employee
+            })
+            ->when($request->input('category'), function ($query, $category_id) {
+                return $query->whereJsonContains('category_ids', $category_id); //filter by category
             })
             ->get();
 
