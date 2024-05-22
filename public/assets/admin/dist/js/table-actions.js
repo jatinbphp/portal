@@ -1,24 +1,43 @@
 $(function () {
     //Employees Table
+    var showStatusColumnFlag = true;
+    if (window.location.pathname.indexOf('/portal/admin/daily-performance') !== -1) {
+        showStatusColumnFlag = false;
+    }
+
+    var columnsBeforeStatus = [
+        {
+            data: 'id', 
+            width: '10%', 
+            name: 'id',
+            render: function(data, type, row) {
+                return '#' + data; // Prepend '#' to the 'id' data
+            }
+        },
+        {data: 'name', name: 'name'},
+        {data: 'email', name: 'email'},
+    ];
+
+    var columnsAfterStatus = [
+      {data: 'created_at', "width": "14%", name: 'created_at'},  
+        {data: 'action', "width": "12%", orderable: false},                
+    ];
+
+    var employeesTableColumns = columnsBeforeStatus;
+
+    if (showStatusColumnFlag) {
+        employeesTableColumns.push({data: 'status', "width": "10%", name: 'status', orderable: false});
+    }
+
+    employeesTableColumns = employeesTableColumns.concat(columnsAfterStatus);
+
     var employees_table = $('#employeesTable').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 100,
         lengthMenu: [ 100, 200, 300, 400, 500 ],
         ajax: $("#route_name").val(),
-        columns: [
-            {
-                data: 'id', width: '10%', name: 'id',
-                render: function(data, type, row) {
-                    return '#' + data; // Prepend '#' to the 'id' data
-                }
-            },
-            {data: 'name', name: 'name'},
-            {data: 'email',  name: 'email'},
-            {data: 'status', "width": "10%",  name: 'status', orderable: false},  
-            {data: 'created_at', "width": "14%", name: 'created_at'},  
-            {data: 'action', "width": "12%", orderable: false},                
-        ],
+        columns: employeesTableColumns,
         "order": [[0, "DESC"]]
     });
 

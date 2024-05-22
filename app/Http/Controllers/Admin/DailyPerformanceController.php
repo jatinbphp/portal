@@ -29,10 +29,6 @@ class DailyPerformanceController extends Controller{
                 ->editColumn('role', function($row) {
                     return ucwords(str_replace("_", " ", $row->role)); 
                 })
-                ->editColumn('status', function($row){
-                    $row['table_name'] = 'users';
-                    return view('admin.common.status-buttons', $row);
-                })
                 ->addColumn('action', function($row){
                     $row['section_name'] = 'daily-performance';
                     $row['section_title'] = 'Daily Performance';

@@ -100,4 +100,93 @@ class ReportController extends Controller
 
         return view('admin.reports.employee.tasks', compact('daily_performances'));    
     }
+
+    public function exportEmployeeReport(Request $request){
+        $userId = $request->query('userId');
+        $dateRange = $request->query('dateRange');
+        $users = User::where('role', 'employees')->where('status','active');
+        if (!empty($userId)) {
+            $users->where('id', $userId);
+        }
+        $users = $users->get();
+
+        if(empty($users)){
+            \Session::flash('danger','No data found!');
+            return redirect()->route('reports.employees');
+        }
+
+        $headers = ['#', 'Name', 'Task Description', 'Date of Entry', 'Comments'];
+        $exportData = [];
+        foreach($users as $key => $val) {
+            $getUserCat = $this->get_employee_categories($val);
+            $daily_performances = DailyPerformance::with('tasks')->where('user_id', $val->id);
+            if (!empty($dateRange)) {
+                $daterange = $dateRange;
+                $dates = explode("-", $daterange);
+                $start_date = trim(str_replace("/", "-", $dates[0]));
+                $end_date = trim(str_replace("/", "-", $dates[1]));
+                $daily_performances->where('datetime', '>=', $start_date)
+                                    ->where('datetime', '<=', $end_date);
+            }
+
+            $daily_performances = $daily_performances->get();
+            $getUserTask = [];
+            if(!$daily_performances->isEmpty()){
+                foreach($daily_performances as $dlKey => $dlVal){
+                    $reportdata = [];
+                    $id = '';
+                    $name = '';
+                    if($dlKey==0){
+                        $id = $val->id;
+                        $name = $val->name.'-'.$getUserCat;
+                    }
+
+                    $taskNm = (isset($dlVal->task->name)) ? $dlVal->task->name : '';
+                    $dateTime = (isset($dlVal->datetime)) ? $dlVal->datetime : '';
+                    $comment = (isset($dlVal->comment)) ? $dlVal->comment : '';
+
+                    $reportdata = [
+                        $id,
+                        $name,
+                        $taskNm,
+                        $dateTime,
+                        $comment,
+                    ];
+
+                    $exportData[] = $reportdata;
+                }
+            }
+        }
+
+        // Create a temporary file to store CSV data
+        $temp_file = tempnam(sys_get_temp_dir(), 'export_');
+        $file = fopen($temp_file, 'w');
+
+        // Write headers to CSV file
+        fputcsv($file, $headers);
+    
+        // Write data to CSV file
+        foreach ($exportData as $row) {
+            fputcsv($file, $row);
+        }
+
+        // Close the file
+        fclose($file);
+
+        // Set headers for direct download
+        header('Content-Description: File Transfer');
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="exported_employee_report_data.csv"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($temp_file));
+
+        // Output file contents
+        readfile($temp_file);
+
+        // Delete temporary file
+        unlink($temp_file);
+        exit;
+    }
 }

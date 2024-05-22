@@ -23,6 +23,9 @@
                     </div>
                 </div>
                 <div class="card card-info card-outline">
+                     <div class="mt-3 mr-3">
+                        <a href="{{route('reports-employee.export')}}" class="btn btn-sm btn-info float-right mr-1 export-employee-report"><i class="fa fa-download pr-1"></i> Export Report</a>
+                    </div>
                     <div class="card-header">
                         @include('admin.common.card-header', ['title' => 'Manage ' . $menu])
                     </div>
@@ -58,7 +61,6 @@
 @endsection
 @section('jquery')
 <script type="text/javascript">
-    
     var table = $('#employeesReportTable').DataTable({
         processing: true,
         serverSide: true,
@@ -94,12 +96,27 @@
 
     function handleFilter(event){
        $('#employeesReportTable').DataTable().ajax.reload(null, false);
+       setExportRoute('set');
     }
 
     function handleClear(event){
         $(event.target).closest('form').find("input[type=text]").val("");
         $("#employee").val('').trigger('change')
         $('#employeesReportTable').DataTable().ajax.reload(null, false);
+        setExportRoute('clear');
+    }
+
+    function setExportRoute(mode){
+        if(mode == 'set'){
+            var getRoute = $(".export-employee-report").attr('href');
+            var getEmployee = $("#employee").val();
+            var getDateRange = $("#daterange").val();
+            var routeUrl = "{{ route('reports-employee.export') }}?userId=" + getEmployee + "&dateRange=" + encodeURIComponent(getDateRange);
+            $(".export-employee-report").attr('href', routeUrl);
+        } else {
+            var routeUrl = "{{ route('reports-employee.export') }}";
+            $(".export-employee-report").attr('href', routeUrl);
+        }
     }
 
 </script>
