@@ -23,7 +23,7 @@
         @if(isset($tasks) && !empty($tasks))
             @foreach($tasks as $key => $value)
                 <tr>
-                    <th scope="row">{{ "#" . $key }} {!! Form::hidden('task_id[]', $value->id ?? null, ['id' => 'task_id_' . $key]) !!}</th>
+                    <th scope="row">{{ "#" . $value->id }} {!! Form::hidden('task_id[]', $value->id ?? null, ['id' => 'task_id_' . $key]) !!}</th>
                     <td>{{ $value->name ?? "-" }}</td>
                     <td>
                         {!! Form::input('datetime-local', 'datetime[]', date("Y-m-d H:i:s"), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
