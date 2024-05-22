@@ -17,6 +17,7 @@ class DailyPerformanceRequest extends FormRequest
         return [
             'datetime.*'  => 'nullable',
             'comment.*'   => 'nullable|max:500',
+            'comment'     => 'nullable|max:500',
         ];
     }
 }
