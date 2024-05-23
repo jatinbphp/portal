@@ -53,7 +53,6 @@ class DailyPerformanceController extends Controller{
                         $query->orWhereJsonContains('category_ids', $category_id);
                     }
                 })->get();
-        
         $data['employee'] = $employee;
         $data['category_ids']= $category_ids;
 
@@ -63,17 +62,20 @@ class DailyPerformanceController extends Controller{
 
     public function store(DailyPerformanceRequest $request){
         $input = $request->all();
-        $category_ids = $request->category_ids;
+        $category_data = $request->category_data;
+        
         if(!isset($input['task_id'])) return redirect()->back()->with('danger', 'Error occured while saving the data');
-
         foreach($input['task_id'] as $key => $value){
+           
             if(isset($input['comment'][$key])){
                 $data['user_id']        = $input['user_id'];
-                $data['category_id']    = json_encode($category_ids ?? null);
+                $category_ids = explode(', ', $category_data[$key]);
+                $data['category_id'] = json_encode($category_ids);
                 $data['task_id']        = $input['task_id'][$key] ?? null;
                 $data['comment']        = $input['comment'][$key];
                 $data['datetime']       = isset($input['datetime'][$key]) ? Carbon::parse($input['datetime'][$key]) : Carbon::now();
                 DailyPerformance::create($data);
+
             }
         }
 

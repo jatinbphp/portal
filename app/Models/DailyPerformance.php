@@ -21,4 +21,6 @@ class DailyPerformance extends Model
     public function tasks(){
         return $this->hasMany(Task::class, 'id', 'task_id'); 
     }
+
+    
 }

@@ -28,7 +28,7 @@
                         @include('admin.common.card-header', ['title' => 'Manage ' . $menu])
                     </div>
                     <div class="card-body table-responsive">
-                        <input type="hidden" id="route_name" value="{{ route('reports.category_report') }}">
+                        <input type="hidden" id="route_name" value="{{ route('reports.categories') }}">
                         <table id="categoryReportTable" class="table table-bordered table-striped datatable-dynamic">
                             <thead>
                                 <tr>

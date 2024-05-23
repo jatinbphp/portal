@@ -1,7 +1,7 @@
 $(function () {
     //Employees Table
     var showStatusColumnFlag = true;
-    if (window.location.pathname.indexOf('/portal/admin/daily-performance') !== -1) {
+    if (window.location.pathname.indexOf('/admin/daily-performance') !== -1) {
         showStatusColumnFlag = false;
     }
 
