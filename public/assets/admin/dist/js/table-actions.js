@@ -28,6 +28,9 @@ $(function () {
     if (showStatusColumnFlag) {
         employeesTableColumns.push({data: 'status', "width": "10%", name: 'status', orderable: false});
     }
+    if (!showStatusColumnFlag) {
+        employeesTableColumns.push({data: 'branch_name', name: 'branch_name',orderable: true});
+    }
 
     employeesTableColumns = employeesTableColumns.concat(columnsAfterStatus);
 
@@ -38,7 +41,7 @@ $(function () {
         lengthMenu: [ 100, 200, 300, 400, 500 ],
         ajax: $("#route_name").val(),
         columns: employeesTableColumns,
-        "order": [[0, "DESC"]]
+        order: [[1, "ASC"]]
     });
 
     //Category Table
@@ -60,7 +63,7 @@ $(function () {
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'action', "width": "12%",  name: 'action', orderable: false},
         ],
-        "order": [[0, "DESC"]]
+        "order": [[1, "ASC"]]
     });
 
     //Task Table
@@ -105,7 +108,7 @@ $(function () {
         ],
         "order": [[1, "ASC"]]
     });
-
+    
     //  Employee Report Table
      var employee_report_table = $('#employeeReportTable').DataTable({
         processing: true,
@@ -126,8 +129,8 @@ $(function () {
         "order": [[1, "ASC"]]
     });
 
-    // Daily Performance Task List Table
-    var daily_performance_table = $('#tasklistTable').DataTable({
+     // Daily Performance Task List Table
+     var daily_performance_table = $('#tasklistTable').DataTable({
         processing: true,
         serverSide: true,
         pageLength: 100,
@@ -141,7 +144,6 @@ $(function () {
         ],
         "order": [[1, "ASC"]]
     });
-
 
     var sectionTableMap = {
         'categories_table': categories_table,

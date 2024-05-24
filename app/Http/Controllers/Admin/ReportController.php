@@ -25,7 +25,6 @@ class ReportController extends Controller
         return view('admin.reports.category.index', $data);
     }
 
-    //employee report
     public function employees_report(Request $request){
         if ($request->ajax()) {
             return $this->handle_ajax_request($request);
@@ -38,10 +37,10 @@ class ReportController extends Controller
     private function handle_ajax_request(Request $request){
         $users = User::where('id', '!=', Auth::user()->id)
             ->when($request->input('user_id'), function ($query, $user_id) {
-                return $query->where('id', $user_id); //filter by employee
+                return $query->where('id', $user_id); 
             })
             ->when($request->input('category'), function ($query, $category_id) {
-                return $query->whereJsonContains('category_ids', $category_id); //filter by category
+                return $query->whereJsonContains('category_ids', $category_id); 
             })
             ->get();
         if(!empty($request->daterange))
@@ -60,7 +59,6 @@ class ReportController extends Controller
     }
 
     private function handle_category_ajax_request(Request $request){
-       
         $users = User::where('role','employees')->where('status','active')
         ->when($request->input('category'), function ($query, $category_id) {
             return $query->whereJsonContains('category_ids', $category_id);
@@ -94,11 +92,10 @@ class ReportController extends Controller
     private function filter_users_with_date_range($users, $request){
         return $users->filter(function($user) use($request) {
             $date = explode('-', $request->daterange);
+            $startDate= date('Y-m-d 00:00:00', strtotime($date[0] ?? 0));
             $endDate = date('Y-m-d 23:59:59', strtotime($date[1] ?? 0));
-            $startTimestamp = strtotime($date[0] ?? 0);
-            $endTimestamp = strtotime($endDate);
             $dailyPerformances = DailyPerformance::with('tasks')->where('user_id', $user->id)
-                ->whereBetween(\DB::raw("UNIX_TIMESTAMP(datetime)"), [$startTimestamp, $endTimestamp])
+                ->whereBetween('datetime', [$startDate, $endDate])
                 ->get();
             return $dailyPerformances->isNotEmpty();
         });
@@ -129,12 +126,13 @@ class ReportController extends Controller
     private function get_employee_tasks($row, $request){
 
         $query = DailyPerformance::with('tasks')->where('user_id', $row->id);
+        
         if ($request->daterange) {
             $date = explode('-', $request->daterange);
-            $endDate = date('Y-m-d 23:59:59', strtotime($date[1] ?? 0));
-            $startTimestamp = strtotime($date[0] ?? 0);
-            $endTimestamp = strtotime($endDate);
-            $query->whereBetween(\DB::raw("UNIX_TIMESTAMP(datetime)"), [$startTimestamp, $endTimestamp]);
+            $startDate = trim($date[0]) . ' 00:00:00';
+            $endDate = trim($date[1]) . ' 23:59:59';
+            
+            $query->whereBetween('datetime', [$startDate, $endDate]);
         }
 
         $daily_performances = $query->get();
@@ -149,7 +147,7 @@ class ReportController extends Controller
         if (!empty($userId)) {
             $users->where('id', $userId);
         }
-        $users = $users->get();
+        $users = $users->orderBy('name', 'asc')->get();
 
         if(empty($users)){
             \Session::flash('danger','No data found!');
@@ -161,13 +159,13 @@ class ReportController extends Controller
         foreach($users as $key => $val) {
             $getUserCat = $this->get_employee_categories($val);
             $daily_performances = DailyPerformance::with('tasks')->where('user_id', $val->id);
-            if (!empty($dateRange)) {
-                $daterange = $dateRange;
-                $dates = explode("-", $daterange);
-                $start_date = trim(str_replace("/", "-", $dates[0]));
-                $end_date = trim(str_replace("/", "-", $dates[1]));
-                $daily_performances->where('datetime', '>=', $start_date)
-                                    ->where('datetime', '<=', $end_date);
+
+            if ($request->dateRange) {
+                $date = explode('-', $request->dateRange);
+                $startDate = trim($date[0]) . ' 00:00:00';
+                $endDate = trim($date[1]) . ' 23:59:59';
+                
+                $daily_performances->whereBetween('datetime', [$startDate, $endDate]);
             }
 
             $daily_performances = $daily_performances->get();
@@ -179,7 +177,7 @@ class ReportController extends Controller
                     $name = '';
                     if($dlKey==0){
                         $id = $val->id;
-                        $name = $val->name.'-'.$getUserCat;
+                        $name = $getUserCat;
                     }
 
                     $taskNm = (isset($dlVal->task->name)) ? $dlVal->task->name : '';
@@ -199,22 +197,17 @@ class ReportController extends Controller
             }
         }
 
-        // Create a temporary file to store CSV data
         $temp_file = tempnam(sys_get_temp_dir(), 'export_');
         $file = fopen($temp_file, 'w');
 
-        // Write headers to CSV file
         fputcsv($file, $headers);
     
-        // Write data to CSV file
         foreach ($exportData as $row) {
             fputcsv($file, $row);
         }
 
-        // Close the file
         fclose($file);
 
-        // Set headers for direct download
         header('Content-Description: File Transfer');
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="exported_employee_report_data.csv"');
@@ -223,10 +216,8 @@ class ReportController extends Controller
         header('Pragma: public');
         header('Content-Length: ' . filesize($temp_file));
 
-        // Output file contents
         readfile($temp_file);
 
-        // Delete temporary file
         unlink($temp_file);
         exit;
     }
@@ -239,6 +230,7 @@ class ReportController extends Controller
             ->when($category_id, function ($query, $category_id) {
                 return $query->whereJsonContains('category_ids', $category_id);
             })
+            ->orderBy('name', 'asc')
             ->get();
     
         if ($category->isEmpty()) {
@@ -252,14 +244,20 @@ class ReportController extends Controller
         foreach ($category as $key => $user) {
             $userCategories = $this->get_categories($user, $request);
     
-            $query = DailyPerformance::with('tasks')->where('user_id', $user->id);
-    
-            if ($dateRange) {
-                $date = explode('-', $dateRange);
-                $endDate = date('Y-m-d 23:59:59', strtotime($date[1] ?? 0));
-                $startTimestamp = strtotime($date[0] ?? 0);
-                $endTimestamp = strtotime($endDate);
-                $query->whereBetween(\DB::raw("UNIX_TIMESTAMP(datetime)"), [$startTimestamp, $endTimestamp]);
+            if(!empty($category_id))
+            {
+                $query = DailyPerformance::with('tasks')->where('user_id', $user->id)->whereJsonContains('category_id', $category_id);
+
+            }
+            else{
+                $query = DailyPerformance::with('tasks')->where('user_id', $user->id);
+            }
+            if ($request->dateRange) {
+                $date = explode('-', $request->dateRange);
+                $startDate = trim($date[0]) . ' 00:00:00';
+                $endDate = trim($date[1]) . ' 23:59:59';
+                
+                $query->whereBetween('datetime', [$startDate, $endDate]);
             }
     
             $daily_performances = $query->get();
@@ -279,22 +277,17 @@ class ReportController extends Controller
             }
         }
     
-        // Create a temporary file to store CSV data
         $temp_file = tempnam(sys_get_temp_dir(), 'export_');
         $file = fopen($temp_file, 'w');
 
-        // Write headers to CSV file
         fputcsv($file, $headers);
     
-        // Write data to CSV file
         foreach ($exportData as $row) {
             fputcsv($file, $row);
         }
 
-        // Close the file
         fclose($file);
 
-        // Set headers for direct download
         header('Content-Description: File Transfer');
         header('Content-Type: text/csv');
         header('Content-Disposition: attachment; filename="exported_category_report_data.csv"');
@@ -303,37 +296,43 @@ class ReportController extends Controller
         header('Pragma: public');
         header('Content-Length: ' . filesize($temp_file));
 
-        // Output file contents
         readfile($temp_file);
 
-        // Delete temporary file
         unlink($temp_file);
         exit;
     }
     
-
     private function get_tasks_by_category($row,$request) {
-        if(!empty($request->category))
+        $category = [$request->category];
+        if(empty($request->category))
         {
-            $category = [$request->category];
-        }
-        else{
-            $category = json_decode($row->category_ids, true);  
-        }
-        $query = DailyPerformance::with('tasks')
-          ->where('user_id', $row->id)
-          ->whereJsonContains('category_id', $category); 
+            $query = DailyPerformance::with('tasks')
+            ->where('user_id', $row->id);
             if ($request->daterange) {
                 $date = explode('-', $request->daterange);
-                $endDate = date('Y-m-d 23:59:59', strtotime($date[1] ?? 0));
-                $startTimestamp = strtotime($date[0] ?? 0);
-                $endTimestamp = strtotime($endDate);
-                $query->whereBetween(\DB::raw("UNIX_TIMESTAMP(datetime)"), [$startTimestamp, $endTimestamp]);
+                $startDate = trim($date[0]) . ' 00:00:00';
+                $endDate = trim($date[1]) . ' 23:59:59';
+                
+                $query->whereBetween('datetime', [$startDate, $endDate]);
             }
- 
-            $daily_performances = $query->get();
- 
-         return view('admin.reports.category.tasks', compact('daily_performances'));
-     }
-    
+              $daily_performances = $query->get();
+        }
+        else
+        {
+            $query = DailyPerformance::with('tasks')
+            ->where('user_id', $row->id)
+            ->whereJsonContains('category_id', $category); 
+                if ($request->daterange) {
+                    $date = explode('-', $request->daterange);
+                    $startDate = trim($date[0]) . ' 00:00:00';
+                    $endDate = trim($date[1]) . ' 23:59:59';
+                    
+                    $query->whereBetween('datetime', [$startDate, $endDate]);
+                }
+              $daily_performances = $query->get();
+        }
+
+        return view('admin.reports.category.tasks', compact('daily_performances'));
+    }
+  
 }

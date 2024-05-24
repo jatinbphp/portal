@@ -52,7 +52,7 @@ class DailyPerformanceController extends Controller{
                     foreach ($category_ids as $category_id) {
                         $query->orWhereJsonContains('category_ids', $category_id);
                     }
-                })->get();
+                })->orderBy('name','ASC')->get();
         $data['employee'] = $employee;
         $data['category_ids']= $category_ids;
 

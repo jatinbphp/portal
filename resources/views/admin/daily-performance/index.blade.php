@@ -27,6 +27,7 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email Address</th>
+                                    <th>Branch</th>
                                     <th>Date Created</th>
                                     <th>Action</th>
                                 </tr>

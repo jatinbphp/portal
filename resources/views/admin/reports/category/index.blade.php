@@ -93,6 +93,7 @@
             {data: 'employee_category', name: 'employee_category'},
             {data: 'action', "width": "70%", orderable: false},
         ],
+        "order": [[1, "ASC"]]
         
     });
 

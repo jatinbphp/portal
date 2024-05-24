@@ -92,6 +92,7 @@
             {data: 'employee_category', name: 'employee_category', "width": "25%"},
             {data: 'action', "width": "70%", orderable: false},
         ],
+        "order": [[1, "ASC"]]
     });
 
     function handleFilter(event){
