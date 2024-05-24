@@ -243,7 +243,17 @@ class ReportController extends Controller
     
         foreach ($category as $key => $user) {
             $userCategories = $this->get_categories($user, $request);
-    
+            $categoryNames = [];
+
+            if ($category_id) {
+                $categoryNames = Category::whereIn('id', (array)$category_id)->pluck('name')->toArray();
+            } else {
+                $userCategoryIds = json_decode($user->category_ids, true);
+                $categoryNames = Category::whereIn('id', $userCategoryIds)->pluck('name')->toArray();
+            }
+
+            $categoriesToShow = implode(', ', $categoryNames);
+            
             if(!empty($category_id))
             {
                 $query = DailyPerformance::with('tasks')->where('user_id', $user->id)->whereJsonContains('category_id', $category_id);
@@ -266,7 +276,7 @@ class ReportController extends Controller
                 foreach ($daily_performances as $dlcKey => $dlcVal) {
                     $reportData = [
                         $dlcKey == 0 ? $user->id : '',
-                        $dlcKey == 0 ? $userCategories : '',
+                        $dlcKey == 0 ? $user->name . '-' . $categoriesToShow : '',
                         $dlcVal->task->name ?? '',
                         isset($dlcVal->datetime) ? formatCreatedAt($dlcVal->datetime) : '',
                         $dlcVal->comment ?? '',
