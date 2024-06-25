@@ -6,7 +6,7 @@
                     @foreach($daily_performance->tasks as $key => $value)
                         <tr>
                             <td width="30%">{{ $value->name ?? "-" }}</td>
-                            <td width="30%">{{ $daily_performance->datetime ?? "-" }}</td>
+                            <td width="30%">{{ isset($daily_performance->datetime) ? date('Y-m-d H:i', strtotime($daily_performance->datetime)) : "-" }}</td>
                             <td width="40%">{{ $daily_performance->comment }}</td>
                         </tr> 
                     @endforeach

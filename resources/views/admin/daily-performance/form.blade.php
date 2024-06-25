@@ -32,7 +32,7 @@
                     <td>{{ $value->name ?? "-" }}</td>
                     {!! Form::hidden('category_data[]', $categoryIdsString ?? null, ['id' => 'category_data' . $key]) !!}
                     <td>
-                        {!! Form::input('datetime-local', 'datetime[]', date("Y-m-d H:i:s"), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
+                        {!! Form::input('datetime-local', 'datetime[]', date("Y-m-d H:i"), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
                         @if ($errors->has('datetime.' . $key))
                             <span class="text-danger">
                                 <strong>{{ $errors->first('datetime.' . $key) }}</strong>

@@ -181,7 +181,7 @@ class ReportController extends Controller
                     }
 
                     $taskNm = (isset($dlVal->task->name)) ? $dlVal->task->name : '';
-                    $dateTime = (isset($dlVal->datetime)) ? formatCreatedAt($dlVal->datetime) : '';
+                    $dateTime = (isset($dlVal->datetime)) ? date('Y-m-d H:i', strtotime($dlVal->datetime)) : '';
                     $comment = (isset($dlVal->comment)) ? $dlVal->comment : '';
 
                     $reportdata = [
@@ -278,7 +278,8 @@ class ReportController extends Controller
                         $dlcKey == 0 ? $user->id : '',
                         $dlcKey == 0 ? $user->name . '-' . $categoriesToShow : '',
                         $dlcVal->task->name ?? '',
-                        isset($dlcVal->datetime) ? formatCreatedAt($dlcVal->datetime) : '',
+                        isset($dlcVal->datetime) ? date('Y-m-d H:i', strtotime($dlcVal->datetime)) : '',
+
                         $dlcVal->comment ?? '',
                     ];
     

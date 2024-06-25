@@ -52,7 +52,7 @@ class DailyPerformanceController extends Controller{
                     foreach ($category_ids as $category_id) {
                         $query->orWhereJsonContains('category_ids', $category_id);
                     }
-                })->orderBy('name','ASC')->get();
+                })->orderBy('id','ASC')->get();
         $data['employee'] = $employee;
         $data['category_ids']= $category_ids;
 
@@ -73,9 +73,8 @@ class DailyPerformanceController extends Controller{
                 $data['category_id'] = json_encode($category_ids);
                 $data['task_id']        = $input['task_id'][$key] ?? null;
                 $data['comment']        = $input['comment'][$key];
-                $data['datetime']       = isset($input['datetime'][$key]) ? Carbon::parse($input['datetime'][$key]) : Carbon::now();
+                $data['datetime']       = isset($input['datetime'][$key])? Carbon::parse($input['datetime'][$key])->format('Y-m-d H:i'): Carbon::now()->format('Y-m-d H:i');           
                 DailyPerformance::create($data);
-
             }
         }
 
