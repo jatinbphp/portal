@@ -26,7 +26,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
                                         @include('admin.common.label', ['field' => 'date', 'labelText' => 'Date Created', 'isRequired' => false])
-                                        {!! Form::input('datetime-local', 'datetime', $daily_performance->datetime ? date('Y-m-d\TH:i:s', strtotime($daily_performance->datetime)) : date('Y-m-d\TH:i'), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
+                                        {!! Form::input('datetime-local', 'datetime', $daily_performance->datetime ? date('Y-m-d H:i', strtotime($daily_performance->datetime)) : date('Y-m-d\TH:i'), ['class' => 'form-control', 'placeholder' => 'Enter Date and Time', 'id' => 'datetime']) !!}
                                         @include('admin.common.errors', ['field' => 'date'])
                                     </div>
                                 </div>

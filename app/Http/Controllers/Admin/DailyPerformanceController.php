@@ -91,7 +91,7 @@ class DailyPerformanceController extends Controller{
             return Datatables::of($performance)
                 ->addIndexColumn()
                 ->editColumn('created_at', function($row) {
-                    return formatCreatedAt($row->datetime);
+                    return \Carbon\Carbon::parse($row->datetime)->format('Y-m-d H:i');
                 })
                 ->addColumn('task_name', function($row) {
                     return $row->task->name;
