@@ -81,7 +81,7 @@ $(function () {
                 }
             },
             {data: 'name', name: 'name'},
-            {data: 'category_ids', name: 'category_ids',orderable: false},
+            {data: 'category_ids', name: 'category_ids',orderable: true},
             {data: 'status', "width": "10%",  name: 'status', orderable: false},
             {data: 'created_at', "width": "15%", name: 'created_at'},
             {data: 'action', "width": "12%",  name: 'action', orderable: false},

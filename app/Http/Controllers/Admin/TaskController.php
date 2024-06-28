@@ -15,7 +15,12 @@ class TaskController extends Controller
     {
         $data['menu'] = 'Tasks';
         if ($request->ajax()) {
-            return Datatables::of(Task::select())
+
+            $query = Task::leftJoin('categories', 'tasks.category_ids', '=', 'categories.id')
+            ->select('tasks.*')
+            ->get();
+
+            return Datatables::of($query)
                 ->addIndexColumn()
                 ->editColumn('created_at', function($row){
                     return $row['created_at']->format('Y-m-d h:i:s');
